@@ -953,7 +953,7 @@
           params: collectAccidentData()
         },
         dataType: 'json',
-        success: callback(data),
+        success: function(data) { callback(data); },
         error: function() {
           console.error('Something wrong with the sendSearchAccidentRequest!');
         }
