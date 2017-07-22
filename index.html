@@ -435,9 +435,7 @@
       "澎湖縣": { lat: 23.56964000000005, lng: 119.5661100000001 },
       "嘉義縣": { lat: 23.459220000000073, lng: 120.29307000000006 },
       "臺東縣": { lat: 22.755210000000034, lng: 121.15052000000003 },
-      "外國":  { lat: 34.896841970000025, lng: 135.78876826300007 },
       "連江縣": { lat: 26.157670000000053, lng: 119.95158000000004 },
-      "新竹鹿港沿海": { lat: 24.80361000000005, lng: 120.96861000000001 },
     };
     var cityEncodings = {
       "臺北市": {
@@ -1075,10 +1073,11 @@
         switch(this.props.id) {
           case 'city-filter-group':
             $('#city-filter-group input[type="checkbox"]').each(function() {
-              $(this).prop('checked', true);
+              $(this).prop('checked', false);
             });
 
             $('#city-filter-group').on('click', 'label', function(event) {
+              if ($('input#' + $(this).attr('for')).is(':checked')) return;
               var pos = cityLocation[$(this).text()]
               if (pos) { map.setCenter(pos); }
             });
