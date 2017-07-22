@@ -880,24 +880,26 @@
     ];
 
     function collectCrimeData() {
+      var b = current_bound
       var result = {
-        bound: current_bound,
-        params: {
-          city: [],
-          district: [],
-          crime: []
-        }
+        top: b.top,
+        bottom: b.bottom,
+        left: b.left,
+        right: b.right,
+        city: [],
+        dist: [],
+        crime: []
       };
       var checked = $('#filter-app input[type="checkbox"]:checked');
       for (var element of checked) {
         if (new RegExp('-all').test(element.id)) { continue; }
         if (new RegExp('city').test(element.id)) {
-          result.params.city.push(parseInt(element.id.replace(/city-/, '')))
+          result.city.push(parseInt(element.id.replace(/city-/, '')))
         } else if (new RegExp('district').test(element.id)) {
-          result.params.district.push(parseInt(element.id.replace(/district-/, '')))
+          result.district.push(parseInt(element.id.replace(/district-/, '')))
         } else if (new RegExp('crime').test(element.id)) {
           var crimeCode = crimeData.filter(function(crime) { return element.name == crime.name })[0].value
-          result.params.crime.push(crimeCode);
+          result.crime.push(crimeCode);
         }
       }
       console.log('Collect crime data: ', result);
@@ -905,26 +907,29 @@
     }
 
     function collectAccidentData() {
+      var b = current_bound
       var result = {
-        bound: current_bound,
-        params: {
-          city: [],
-          district: [],
-          accident: {}
-        }
+        top: b.top,
+        bottom: b.bottom,
+        left: b.left,
+        right: b.right,
+        city: [],
+        dist: [],
+        death: false,
+        injury: false
       };
       var checked = $('#filter-app input[type="checkbox"]:checked');
       for (var element of checked) {
         if (new RegExp('-all').test(element.id)) { continue; }
         if (new RegExp('city').test(element.id)) {
-          result.params.city.push(parseInt(element.id.replace(/city-/, '')))
+          result.city.push(parseInt(element.id.replace(/city-/, '')))
         } else if (new RegExp('district').test(element.id)) {
-          result.params.district.push(parseInt(element.id.replace(/district-/, '')))
+          result.district.push(parseInt(element.id.replace(/district-/, '')))
         } else if (new RegExp('accident').test(element.id)) {
           if (element.name == 'accident-traffic-death') {
-            result.params.accident.death = true
+            result.death = true
           } else if (element.name == 'accident-traffic-accident') {
-            result.params.accident.injury = true
+            result.injury = true
           }
         }
       }
