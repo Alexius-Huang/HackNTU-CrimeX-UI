@@ -903,6 +903,33 @@
       return result;
     }
 
+    function collectAccidentData() {
+      var result = {
+        bound: current_bound,
+        params: {
+          city: [],
+          district: [],
+          accident: {}
+        }
+      };
+      var checked = $('#filter-app input[type="checkbox"]:checked');
+      for (var element of checked) {
+        if (new RegExp('-all').test(element.id)) { continue; }
+        if (new RegExp('city').test(element.id)) {
+          result.params.city.push(parseInt(element.id.replace(/city-/, '')))
+        } else if (new RegExp('district').test(element.id)) {
+          result.params.district.push(parseInt(element.id.replace(/district-/, '')))
+        } else if (new RegExp('accident').test(element.id)) {
+          if (element.name == 'accident-traffic-death') {
+            result.params.accident.death = true
+          } else if (element.name == 'accident-traffic-accident') {
+            result.params.accident.injury = true
+          }
+        }
+      }
+      return result;
+    }
+
     var baseURL = 'http://192.168.43.158:8000';
 
     function sendSearchCrimeRequest(callback) {
@@ -923,7 +950,7 @@
         url: '',
         data: {
           bound: current_bound,
-          params: collectCrimeData()
+          params: collectAccidentData()
         },
         dataType: 'json',
         success: callback(data),
@@ -940,7 +967,10 @@
       componentDidMount: function() {
         $('#filter-app').on('change', 'input', function(event) {
           sendSearchCrimeRequest(function(data) {
-            console.log(data);
+            console.log("Data search from Crime request: ", data);
+          });
+          sendSearchAccidentRequest(function(data) {
+            console.log("Data search from Accident request: ", data);
           });
         });
       },
