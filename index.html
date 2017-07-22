@@ -900,6 +900,7 @@
           result.params.crime.push(crimeCode);
         }
       }
+      console.log('Collect crime data: ', result);
       return result;
     }
 
@@ -927,6 +928,7 @@
           }
         }
       }
+      console.log('Collect accident data: ', result);
       return result;
     }
 
@@ -947,7 +949,7 @@
 
     function sendSearchAccidentRequest(callback) {
       $.ajax({
-        url: baseURL + 'v1/crimex/accident',
+        url: baseURL + '/v1/crimex/accident',
         data: {
           bound: current_bound,
           params: collectAccidentData()
