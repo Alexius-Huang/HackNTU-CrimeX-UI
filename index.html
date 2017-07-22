@@ -947,7 +947,7 @@
 
     function sendSearchAccidentRequest(callback) {
       $.ajax({
-        url: '',
+        url: baseURL + 'v1/crimex/accident',
         data: {
           bound: current_bound,
           params: collectAccidentData()
