@@ -84,6 +84,37 @@ div#btn-group img {
   margin-left: -12.5pt;
   margin-top: -12.5pt;
 }
+div#btn-group > button#btn-about:after {
+  content: '關於 CrimeX'
+}
+div#btn-group > button#btn-team:after {
+  content: '關於製作團隊';
+}
+div#btn-group > button#btn-event:after {
+  content: 'HackNTU 2017';
+}
+div#btn-group > button#btn-about:after,
+div#btn-group > button#btn-team:after,
+div#btn-group > button#btn-event:after {
+  opacity: 0;
+  transition: .5s;
+  background-color: rgba(27, 45, 105, 0.9);
+  color: white;
+  display: inline-block;
+  box-sizing: border-box;
+  position: absolute;
+  padding: 3pt 5pt;
+  border-radius: 5pt;
+  left: 0;
+  top: -30pt;
+  width: 100%;
+}
+div#btn-group > button#btn-about:hover:after,
+div#btn-group > button#btn-team:hover:after,
+div#btn-group > button#btn-event:hover:after {
+  transition: .5s;
+  opacity: 1;
+}
 input#trigger-btn {
   position: fixed;
   left: -1000px;
