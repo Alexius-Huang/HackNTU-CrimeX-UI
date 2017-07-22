@@ -269,8 +269,10 @@
       }
     ];
     var current_bound;
+    var $markers = []
+    var $heatmap = null
 
-    function initMap() {
+    function initMap() {google.maps.__gjsload__('visualization', function(_){var lx=function(a){return _.mb(a)&&null!=a?a instanceof _.F?!0:a.location instanceof _.F&&(!a.weight||_.y(a.weight)):!1},mx=_.oa(),nx=function(a){this.set("data",new _.td);this.setValues(a)},ox=function(a){this.setValues(a)},px=function(a){this.setValues(a)};_.t(mx,_.D);_.t(nx,mx);nx.prototype.setData=function(a){if(!(_.Ja(a)||a instanceof _.td))throw _.oc("not an Array or MVCArray");_.m(a.getLength)||(a=new _.td(a));_.vc(lx)(a.getArray());this.set("data",a)};nx.prototype.map_changed=function(){var a=this;_.G("visualization_impl",function(b){b.b(a)})};_.rd(nx.prototype,{map:_.pi,data:null});_.t(ox,_.D);_.rd(ox.prototype,{layerId:_.Nh,layerKey:_.Nh,map:_.pi,mapId:_.Nh,opacity:_.Mh,properties:null,status:null});_.t(px,_.D);_.rd(px.prototype,{layerId:_.Nh,layerKey:_.Nh,map:_.pi,mapId:_.Nh,opacity:_.Mh,properties:null,status:null,zIndex:_.Mh});_.Vb.google.maps.visualization={DynamicMapsEngineLayer:ox,HeatmapLayer:nx,MapsEngineLayer:px,MapsEngineStatus:{OK:_.ia,INVALID_LAYER:"INVALID_LAYER",UNKNOWN_ERROR:_.la}};_.Xc("visualization",{});});
       var taipei = {lat: 25.0238415, lng: 121.5310981};
       map = new google.maps.Map(document.getElementById('map'), {
         zoom: 13,
@@ -279,6 +281,7 @@
         styles: styles,
       });
       current_bound = map.getBounds();
+      /*
       var positions = [
         { lat: 22.6636185, lng: 120.31628619999992 },
         { lat: 23.967396, lng: 120.96339499999999 },
@@ -401,6 +404,7 @@
           map: map,
           title: "Hello",
         });
+        $markers.push(marker);
         (function(pos, marker) {
           var infowindow = new google.maps.InfoWindow({
             content: "經度：" + pos.lat + " <br/> 緯度：" + pos.lng,
@@ -413,6 +417,7 @@
           });
         })(position, marker);
       }
+      */
 
       var updateBound = function() {
         b = map.getBounds();
@@ -426,10 +431,15 @@
       map.addListener('bounds_changed', updateBound);
       map.addListener('center_changed', updateBound);
     }
+
+    function clearMarkers() {
+      for (var i = 0; i < $markers.length; i++ ) {
+        $markers[i].setMap(null);
+      }
+      $markers.length = 0;
+    }
   </script>
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLKb6i6_luReRRj4YiKTPCVmd-q7u33DI&callback=initMap">
-  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOdF09pHdFT2gsp6mevR2dDHyDJux_Oao&libraries=visual‌​ization&callback=initMap"></script>
   <script type="text/babel">
     var cityLocation = {
       "臺北市": { lat: 25.037370000000067, lng: 121.56355000000008 },
@@ -1028,6 +1038,15 @@
           });
           sendSearchAccidentRequest(function(data) {
             console.log("Data search from Accident request: ", data);
+            if ($heatmap) { $heatmap.setMap(null) }
+            var heatmapData = data.results.map(function(d) {
+              return new google.maps.LatLng(d[0], d[1])
+            });
+            
+            $heatmap = new google.maps.visualization.HeatmapLayer({
+              data: heatmapData
+            });
+            $heatmap.setMap(map);
           });
         });
       },
