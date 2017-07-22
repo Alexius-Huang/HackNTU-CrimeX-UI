@@ -1,0 +1,250 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  text-decoration: none;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+}
+#wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+#wrapper > nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  /*display: inline-block;*/
+  height: 70pt;
+  width: 100%;
+  transition: .5s;
+  background-color: rgba(27, 45, 105, 0.65);
+}
+#wrapper > nav:hover {
+  transition: .5s;
+  background-color: rgba(27, 45, 105, 0.8);
+}
+#wrapper > nav > div#logo > img {
+  height: 70pt;
+  margin-left: 20pt;
+}
+#wrapper > #map {
+  height: 100%;
+  width: 100%;
+}
+#wrapper > #btn-group {
+  position: fixed;
+  z-index: 2;
+  bottom: 25pt;
+  left: 25pt;
+}
+#wrapper > #btn-group > button {
+  display: inline-block;
+  width: 50pt;
+  height: 50pt;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  outline: 0;
+  background-color: rgba(27, 45, 105, 0.75);
+  position: relative;
+  vertical-align: bottom;
+  transition: .5s;
+}
+#wrapper > #btn-group > button:hover {
+  background-color: rgba(27, 45, 105, 0.9);
+  transition: .5s;
+}
+#wrapper > #btn-group > button + button {
+  opacity: 0;
+  transition: .5s;
+  z-index: -1;
+}
+#wrapper > #btn-group > button > label {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  line-height: 50pt;
+  color: transparent;
+}
+div#btn-group img {
+  position: absolute;
+  width: 25pt;
+  height: 25pt;
+  left: 50%;
+  top: 50%;
+  margin-left: -12.5pt;
+  margin-top: -12.5pt;
+}
+input#trigger-btn {
+  position: fixed;
+  left: -1000px;
+}
+input#trigger-btn:focus {
+  outline: 0;
+}
+label > span {
+  position: absolute;
+  width: 16pt;
+  height: 5pt;
+  border-radius: 2.5pt;
+  background-color: white;
+  transition: .35s;
+}
+span#first {
+  top: 12pt;
+  left: 10pt;
+}
+span#second {
+  width: 29pt;
+  top: 22.5pt;
+  left: 10pt;
+}
+span#third {
+  top: 33pt;
+  left: 23pt;
+}
+input#trigger-btn:checked + div#wrapper > div#btn-group > button + button {
+  opacity: 1;
+  margin-left: 10px;
+  transition: .5s;
+}
+input#trigger-btn:checked + div#wrapper > div#btn-group span#second {
+  transform: rotate(-45deg);
+  transition: .35s;
+}
+input#trigger-btn:checked + div#wrapper > div#btn-group span#first {
+  transform-origin: right top;
+  left: -3pt;
+  top: 16pt;
+  transform: rotate(-135deg);
+  transition: .35s;
+}
+input#trigger-btn:checked + div#wrapper > div#btn-group span#third {
+  transform-origin: left bottom;
+  left: 37pt;
+  top: 28pt;
+  transform: rotate(-135deg);
+  transition: .35s;
+}
+.light-box-wrapper {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 3;
+}
+.light-box-content {
+  position: absolute;
+  width: 500pt;
+  height: 500pt;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: rgba(27, 45, 105, 0.9);
+}
+button.light-box-close-btn {
+  display: inline-block;
+  position: absolute;
+  right: -15pt;
+  top: -15pt;
+  width: 30pt;
+  height: 30pt;
+  border-radius: 50%;
+  background-color: #333;
+  border: none;
+  outline: 0;
+}
+button.light-box-close-btn > span {
+  position: absolute;
+  left: 7.5pt;
+  width: 15pt;
+  height: 3pt;
+  border-radius: 1.5pt;
+  display: inline-block;
+  background-color: white;
+}
+button.light-box-close-btn > span:first-child {
+  transform: rotate(45deg);
+  animation: rotateCounterClockwise-1 .25s;
+}
+button.light-box-close-btn > span:last-child {
+  transform: rotate(-45deg);
+  animation: rotateCounterClockwise-2 .25s;
+}
+button.light-box-close-btn:hover > span:first-child {
+  animation: rotateClockwise-1 .25s;
+}
+button.light-box-close-btn:hover > span:last-child {
+  animation: rotateClockwise-2 .25s;
+}
+@keyframes rotateClockwise-1 {
+  0%   { transform: rotate(45deg); }
+  100% { transform: rotate(135deg); }
+}
+@keyframes rotateClockwise-2 {
+  0%   { transform: rotate(-45deg); }
+  100% { transform: rotate(45deg); }
+}
+@keyframes rotateCounterClockwise-1 {
+  0%   { transform: rotate(135deg); }
+  100% { transform: rotate(45deg); }
+}
+@keyframes rotateCounterClockwise-2 {
+  0%   { transform: rotate(45deg); }
+  100% { transform: rotate(-45deg); }
+}
+#wrapper > #filter-app {
+  position: fixed;
+  width: 250pt;
+  right: 30pt;
+  top: 100pt;
+  color: #a3abc3;
+  background-color: rgba(27, 45, 105, 0.65);
+  padding: 0 12pt 15pt 12pt;
+}
+#wrapper > #filter-app h3 {
+  padding: 10pt 0 8pt 0;
+  margin: 0;
+  color: white;
+}
+.checkboxGroup {
+  line-height: 28pt;
+}
+.checkbox {
+  display: inline-block;
+}
+.checkbox > .filter-label {
+  padding: 5pt;
+  color: '#a3abc3';
+  border-radius: 2pt;
+  border: 1pt solid #a3abc3;
+  transition: .25s;
+}
+.checkbox > .filter-checkbox {
+  position: fixed;
+  top: -1000pt;
+}
+.checkbox > .filter-checkbox:checked + .filter-label {
+  color: white;
+  border-color: white;
+  transition: .25s;
+}
+.disabled {
+  pointer-events: none;
+  color: rgba(50, 50, 50, 0.7);
+  background-color: rgba(50, 50, 50, 0.3);
+}

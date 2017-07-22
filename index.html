@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="./index.css">
+  <title>CrimeX</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      for (var content of ['about', 'team', 'event']) {
+        (function(content) {
+          $('#btn-' + content).on('click', function(event) {
+            event.preventDefault();
+            $('#light-box-' + content).fadeIn();
+          });
+        })(content)
+      }
+
+      $('.light-box-close-btn').on('click', function(event) {
+        $('.light-box-wrapper').fadeOut()
+      })
+    });
+  </script>
+</head>
+<body>
+  <input type="checkbox" name="trigger-btn" id="trigger-btn">
+  <div id="wrapper">
+    <nav>
+      <div id="logo">
+        <img src="./img/logo_white.png" alt="crimeX-white-logo">
+      </div>
+    </nav>
+
+    <div id="map"></div>
+    <div id="filter-app"></div>
+
+    <div id="btn-group">
+      <button><label for="trigger-btn">X
+        <span id="first"></span>
+        <span id="second"></span>
+        <span id="third"></span>
+      </label></button>
+      <button id="btn-about"><img src="./img/about.png" alt="crimeX-about"></button>
+      <button id="btn-team"><img src="./img/team.png" alt="crimeX-team"></button>
+      <button id="btn-event"><img src="./img/event.png" alt="crimeX-event"></button>
+    </div>
+  </div>
+
+  <div id="light-box-about" class="light-box-wrapper">
+    <div class="light-box-content">
+      <button class="light-box-close-btn">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div id="light-box-team" class="light-box-wrapper">
+    <div class="light-box-content">
+      <button class="light-box-close-btn">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div id="light-box-event" class="light-box-wrapper">
+    <div class="light-box-content">
+      <button class="light-box-close-btn">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Google Map -->
+  <script>
+    var map;
+    var styles = [
+      {
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#f5f5f5"
+          }
+        ]
+      },
+      {
+        "elementType": "labels.icon",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#616161"
+          }
+        ]
+      },
+      {
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "color": "#f5f5f5"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.country",
+        "elementType": "labels.text",
+        "stylers": [
+          {
+            "weight": 7
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.land_parcel",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#f4818c"//"#8a8a8d"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#eeeeee"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#f699a2"//"#757575"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#e5e5e5"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#f26a77"//"#9e9e9e"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#ffa6a6"//"#ffffff"
+          }
+        ]
+      },
+      {
+        "featureType": "road.arterial",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#f699a2"//"#757575"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#dadada"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#f8b0b7"//"#616161"
+          },
+          {
+            "weight": 6.5
+          }
+        ]
+      },
+      {
+        "featureType": "road.local",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#f26a77"//"#9e9e9e"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.line",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#e5e5e5"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.station",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#eeeeee"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#ffe8ee"//"#c9c9c9"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#f26a77"//"#9e9e9e"
+          }
+        ]
+      }
+    ];
+    var current_bound;
+
+    function initMap() {
+      var taipei = {lat: 25.0238415, lng: 121.5310981};
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 13,
+        center: taipei,
+        disableDefaultUI: true,
+        styles: styles,
+      });
+      current_bound = map.getBounds();
+      var positions = [
+        { lat: 22.6636185, lng: 120.31628619999992 },
+        { lat: 23.967396, lng: 120.96339499999999 },
+        { lat: 22.6358135, lng: 120.31404659999998 },
+        { lat: 22.6592339, lng: 120.3206596 },
+        { lat: 22.5654074, lng: 120.35844359999999 },
+        { lat: 22.7854841, lng: 120.30671460000008 },
+        { lat: 24.0732358, lng: 120.55075549999992 },
+        { lat: 25.1297986, lng: 121.75090269999998 },
+        { lat: 23.4822655, lng: 120.45990570000004 },
+        { lat: 25.0623299, lng: 121.48249379999993 },
+        { lat: 22.641475, lng: 120.30833899999993 },
+        { lat: 22.5736319, lng: 120.37123029999998 },
+        { lat: 24.1102027, lng: 120.52239110000005 },
+        { lat: 23.9535311, lng: 120.50361380000004 },
+        { lat: 22.6538376, lng: 120.2913572 },
+        { lat: 24.1708672, lng: 120.72353440000006 },
+        { lat: 24.6980969, lng: 120.91342980000002 },
+        { lat: 22.6313749, lng: 120.31919640000001 },
+        { lat: 24.2377569, lng: 120.66686189999996 },
+        { lat: 25.0590099, lng: 121.4867858 },
+        { lat: 23.9506999, lng: 120.57580580000001 },
+        { lat: 22.6376264, lng: 120.34358659999998 },
+        { lat: 23.7059108, lng: 120.5347577 },
+        { lat: 22.6582716, lng: 120.30902220000007 },
+        { lat: 22.6636185, lng: 120.31628619999992 },
+        { lat: 23.967396, lng: 120.96339499999999 },
+        { lat: 22.6358135, lng: 120.31404659999998 },
+        { lat: 22.6592339, lng: 120.3206596 },
+        { lat: 22.5654074, lng: 120.35844359999999 },
+        { lat: 22.7854841, lng: 120.30671460000008 },
+        { lat: 24.0732358, lng: 120.55075549999992 },
+        { lat: 25.1297986, lng: 121.75090269999998 },
+        { lat: 23.4822655, lng: 120.45990570000004 },
+        { lat: 25.0623299, lng: 121.48249379999993 },
+        { lat: 22.641475, lng: 120.30833899999993 },
+        { lat: 22.5736319, lng: 120.37123029999998 },
+        { lat: 24.1102027, lng: 120.52239110000005 },
+        { lat: 23.9535311, lng: 120.50361380000004 },
+        { lat: 22.6538376, lng: 120.2913572 },
+        { lat: 24.1708672, lng: 120.72353440000006 },
+        { lat: 24.9049958, lng: 121.04942630000005 },
+        { lat: 24.8714181, lng: 121.029992 },
+        { lat: 24.1449747, lng: 120.62099030000002 },
+        { lat: 22.6628537, lng: 120.30843019999998 },
+        { lat: 24.1531468, lng: 120.69152099999997 },
+        { lat: 24.5535575, lng: 120.79629190000003 },
+        { lat: 22.5115623, lng: 120.50952669999992 },
+        { lat: 22.5987727, lng: 120.33686239999997 },
+        { lat: 22.6356946, lng: 120.36060459999999 },
+        { lat: 23.9552767, lng: 120.58241420000002 },
+        { lat: 22.6242879, lng: 120.30569779999996 },
+        { lat: 24.6834331, lng: 120.90580699999998 },
+        { lat: 22.6865196, lng: 120.43386450000003 },
+        { lat: 23.6803093, lng: 120.53838369999994 },
+        { lat: 22.8806447, lng: 120.48333230000003 },
+        { lat: 22.88661, lng: 120.66488000000004 },
+        { lat: 22.663208, lng: 120.30667719999997 },
+        { lat: 22.7872768, lng: 120.29815869999993 },
+        { lat: 23.9060377, lng: 120.6962873 },
+        { lat: 22.612505, lng: 120.3089119 },
+        { lat: 24.6864661, lng: 120.91170629999999 },
+        { lat: 24.8251488, lng: 121.02443270000003 },
+        { lat: 23.9314029, lng: 120.99021570000002 },
+        { lat: 22.679878, lng: 120.31135940000001 },
+        { lat: 23.6975029, lng: 120.54087579999998 },
+        { lat: 22.6021109, lng: 120.33308369999997 },
+        { lat: 22.8911822, lng: 120.48361010000008 },
+        { lat: 22.6465919, lng: 120.30318609999995 },
+        { lat: 24.9902534, lng: 121.46664329999999 },
+        { lat: 24.0859183, lng: 120.67636259999995 },
+        { lat: 22.6839066, lng: 120.29887719999999 },
+        { lat: 25.0037412, lng: 121.51234620000002 },
+        { lat: 23.5560652, lng: 119.60210030000007 },
+        { lat: 22.6153897, lng: 120.30126940000002 },
+        { lat: 24.1093494, lng: 120.67989809999995 },
+        { lat: 24.5628831, lng: 120.82366449999995 },
+        { lat: 23.9988668, lng: 120.46506120000004 },
+        { lat: 23.6954024, lng: 120.52984489999994 },
+        { lat: 22.6582899, lng: 120.30597609999995 },
+        { lat: 22.630254, lng: 120.28406500000006 },
+        { lat: 22.671857, lng: 120.30233450000003 },
+        { lat: 22.5360798, lng: 120.40162170000008 },
+        { lat: 22.7063117, lng: 120.33540760000005 },
+        { lat: 24.0709627, lng: 120.5430007 },
+        { lat: 22.6298467, lng: 120.30176600000004 },
+        { lat: 25.0022734, lng: 121.49759629999994 },
+        { lat: 22.543548, lng: 120.45300939999993 },
+        { lat: 22.6247918, lng: 120.30622740000001 },
+        { lat: 24.0774146, lng: 120.54164660000004 },
+        { lat: 24.1445964, lng: 120.68608070000005 },
+        { lat: 22.626628, lng: 120.31206900000006 },
+        { lat: 22.5987727, lng: 120.33686239999997 },
+        { lat: 23.9750315, lng: 120.67552169999999 },
+        { lat: 22.6081693, lng: 120.3368858 },
+        { lat: 25.0225108, lng: 121.42962609999995 },
+        { lat: 25.0166484, lng: 121.46356070000002 },
+        { lat: 22.6298875, lng: 120.36937439999997 },
+        { lat: 25.0684716, lng: 121.50430619999997 },
+        { lat: 24.1123376, lng: 120.67910570000004 },
+        { lat: 23.4613227, lng: 120.4571244 },
+        { lat: 25.0867973, lng: 121.45994240000005 },
+        { lat: 25.0791299, lng: 121.46289009999998 },
+        { lat: 22.6798462, lng: 120.34042950000003 },
+        { lat: 22.6477239, lng: 120.30900599999995 },
+        { lat: 23.9562848, lng: 120.97390010000004 },
+        { lat: 24.9580954, lng: 121.50556529999994 },
+        { lat: 24.1747182, lng: 120.64230309999994 },
+        { lat: 24.1287378, lng: 120.66372569999999 },
+        { lat: 24.1442953, lng: 120.65290930000003 },
+        { lat: 24.1470368, lng: 120.6338283 },
+        { lat: 24.3787167, lng: 120.5890736 },
+        { lat: 24.050795, lng: 120.67538530000002 },
+        { lat: 24.1109, lng: 120.58361360000004 },
+      ]
+
+      for (var position of positions) {
+        marker = new google.maps.Marker({
+          position: position,
+          map: map,
+          title: "Hello",
+        });
+        (function(pos, marker) {
+          var infowindow = new google.maps.InfoWindow({
+            content: "經度：" + pos.lat + " <br/> 緯度：" + pos.lng,
+          });
+          google.maps.event.addListener(marker, 'mouseover', function() {
+            infowindow.open(map,marker);
+          });
+          google.maps.event.addListener(marker, 'mouseout', function() {
+            infowindow.close();
+          });
+        })(position, marker);
+      }
+
+      var updateBound = function() {
+        b = map.getBounds();
+        current_bound = {
+          left: b.b.b,
+          right: b.b.f,
+          top: b.f.f,
+          bottom: b.f.b
+        }
+      }
+      map.addListener('bounds_changed', updateBound);
+      map.addListener('center_changed', updateBound);
+    }
+  </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLKb6i6_luReRRj4YiKTPCVmd-q7u33DI&callback=initMap">
+  </script>
+  <script type="text/babel">
+    var cityEncodings = {
+      "臺北市": {
+        "citycode": "1",
+        "中正區": "100",
+        "大同區": "103",
+        "中山區": "104",
+        "松山區": "105",
+        "大安區": "106",
+        "萬華區": "108",
+        "信義區": "110",
+        "士林區": "111",
+        "北投區": "112",
+        "內湖區": "114",
+        "南港區": "115",
+        "文山區": "116"
+      },
+      "新北市": {
+        "citycode": "3",
+        "萬里區": "207",
+        "金山區": "208",
+        "板橋區": "220",
+        "汐止區": "221",
+        "深坑區": "222",
+        "石碇區": "223",
+        "瑞芳區": "224",
+        "平溪區": "226",
+        "雙溪區": "227",
+        "貢寮區": "228",
+        "新店區": "231",
+        "坪林區": "232",
+        "烏來區": "233",
+        "永和區": "234",
+        "中和區": "235",
+        "土城區": "236",
+        "三峽區": "237",
+        "樹林區": "238",
+        "鶯歌區": "239",
+        "三重區": "241",
+        "新莊區": "242",
+        "泰山區": "243",
+        "林口區": "244",
+        "蘆洲區": "247",
+        "五股區": "248",
+        "八里區": "249",
+        "淡水區": "251",
+        "三芝區": "252",
+        "石門區": "253"
+      },
+      "基隆市": {
+        "citycode": "2",
+        "仁愛區": "200",
+        "信義區": "201",
+        "中正區": "202",
+        "中山區": "203",
+        "安樂區": "204",
+        "暖暖區": "205",
+        "七堵區": "206"
+      },
+      "宜蘭縣": {
+        "citycode": "21",
+        "宜蘭市": "260",
+        "頭城鎮": "261",
+        "礁溪鄉": "262",
+        "壯圍鄉": "263",
+        "員山鄉": "264",
+        "羅東鎮": "265",
+        "三星鄉": "266",
+        "大同鄉": "267",
+        "五結鄉": "268",
+        "冬山鄉": "269",
+        "蘇澳鎮": "270",
+        "南澳鄉": "272",
+        "釣魚台列嶼": "290"
+      },
+      "新竹市": {
+        "citycode": "4",
+        "東區、北區以及香山區": "300"
+      },
+      "新竹縣": {
+        "citycode": "5",
+        "竹北市": "302",
+        "湖口鄉": "303",
+        "新豐鄉": "304",
+        "新埔鎮": "305",
+        "關西鎮": "306",
+        "芎林鄉": "307",
+        "寶山鄉": "308",
+        "竹東鎮": "310",
+        "五峰鄉": "311",
+        "橫山鄉": "312",
+        "尖石鄉": "313",
+        "北埔鄉": "314",
+        "峨嵋鄉": "315"
+      },
+      "桃園市": {
+        "citycode": "6",
+        "中壢區": "320",
+        "平鎮區": "324",
+        "龍潭區": "325",
+        "楊梅區": "326",
+        "新屋區": "327",
+        "觀音區": "328",
+        "桃園區": "330",
+        "龜山區": "333",
+        "八德區": "334",
+        "大溪區": "335",
+        "復興區": "336",
+        "大園區": "337",
+        "蘆竹區": "338"
+      },
+      "苗栗縣": {
+        "citycode": "7",
+        "竹南鎮": "350",
+        "頭份市": "351",
+        "三灣鄉": "352",
+        "南庄鄉": "353",
+        "獅潭鄉": "354",
+        "後龍鎮": "356",
+        "通霄鎮": "357",
+        "苑裡鎮": "358",
+        "苗栗市": "360",
+        "造橋鄉": "361",
+        "頭屋鄉": "362",
+        "公館鄉": "363",
+        "大湖鄉": "364",
+        "泰安鄉": "365",
+        "銅鑼鄉": "366",
+        "三義鄉": "367",
+        "西湖鄉": "368",
+        "卓蘭鎮": "369"
+      },
+      "臺中市": {
+        "citycode": "8",
+        "中區": "400",
+        "東區": "401",
+        "南區": "402",
+        "西區": "403",
+        "北區": "404",
+        "北屯區": "406",
+        "西屯區": "407",
+        "南屯區": "408",
+        "太平區": "411",
+        "大里區": "412",
+        "霧峰區": "413",
+        "烏日區": "414",
+        "豐原區": "420",
+        "后里區": "421",
+        "石岡區": "422",
+        "東勢區": "423",
+        "和平區": "424",
+        "新社區": "426",
+        "潭子區": "427",
+        "大雅區": "428",
+        "神岡區": "429",
+        "大肚區": "432",
+        "沙鹿區": "433",
+        "龍井區": "434",
+        "梧棲區": "435",
+        "清水區": "436",
+        "大甲區": "437",
+        "外埔區": "438",
+        "大安區": "439"
+      },
+      "彰化縣": {
+        "citycode": "10",
+        "彰化市": "500",
+        "芬園鄉": "502",
+        "花壇鄉": "503",
+        "秀水鄉": "504",
+        "鹿港鎮": "505",
+        "福興鄉": "506",
+        "線西鄉": "507",
+        "和美鎮": "508",
+        "伸港鄉": "509",
+        "員林市": "510",
+        "社頭鄉": "511",
+        "永靖鄉": "512",
+        "埔心鄉": "513",
+        "溪湖鎮": "514",
+        "大村鄉": "515",
+        "埔鹽鄉": "516",
+        "田中鎮": "520",
+        "北斗鎮": "521",
+        "田尾鄉": "522",
+        "埤頭鄉": "523",
+        "溪州鄉": "524",
+        "竹塘鄉": "525",
+        "二林鎮": "526",
+        "大城鄉": "527",
+        "芳苑鄉": "528",
+        "二水鄉": "530"
+      },
+      "南投縣": {
+        "citycode": "11",
+        "南投市": "540",
+        "中寮鄉": "541",
+        "草屯鎮": "542",
+        "國姓鄉": "544",
+        "埔里鎮": "545",
+        "仁愛鄉": "546",
+        "名間鄉": "551",
+        "集集鎮": "552",
+        "水里鄉": "553",
+        "魚池鄉": "555",
+        "信義鄉": "556",
+        "竹山鎮": "557",
+        "鹿谷鄉": "558"
+      },
+      "雲林縣": {
+        "citycode": "14",
+        "斗南鎮": "630",
+        "大埤鄉": "631",
+        "虎尾鎮": "632",
+        "土庫鎮": "633",
+        "褒忠鄉": "634",
+        "東勢鄉": "635",
+        "臺西鄉以及台西鄉": "636",
+        "崙背鄉": "637",
+        "麥寮鄉": "638",
+        "斗六市": "640",
+        "林內鄉": "643",
+        "古坑鄉": "646",
+        "莿桐鄉": "647",
+        "西螺鎮": "648",
+        "二崙鄉": "649",
+        "北港鎮": "651",
+        "水林鄉": "652",
+        "口湖鄉": "653",
+        "四湖鄉": "654",
+        "元長鄉": "655"
+      },
+      "嘉義市": {
+        "citycode": "12",
+        "東區以及西區": "600",
+      },
+      "嘉義縣": {
+        "citycode": "13",
+        "番路鄉": "602",
+        "梅山鄉": "603",
+        "竹崎鄉": "604",
+        "阿里山": "605",
+        "中埔鄉": "606",
+        "大埔鄉": "607",
+        "水上鄉": "608",
+        "鹿草鄉": "611",
+        "太保市": "612",
+        "朴子市": "613",
+        "東石鄉": "614",
+        "六腳鄉": "615",
+        "新港鄉": "616",
+        "民雄鄉": "621",
+        "大林鎮": "622",
+        "溪口鄉": "623",
+        "義竹鄉": "624",
+        "布袋鎮": "625"
+      },
+      "臺南市": {
+        "citycode": "15",
+        "中西區": "700",
+        "東區": "701",
+        "南區": "702",
+        "北區": "704",
+        "安平區": "708",
+        "安南區": "709",
+        "永康區": "710",
+        "歸仁區": "711",
+        "新化區": "712",
+        "左鎮區": "713",
+        "玉井區": "714",
+        "楠西區": "715",
+        "南化區": "716",
+        "仁德區": "717",
+        "關廟區": "718",
+        "龍崎區": "719",
+        "官田區": "720",
+        "麻豆區": "721",
+        "佳里區": "722",
+        "西港區": "723",
+        "七股區": "724",
+        "將軍區": "725",
+        "學甲區": "726",
+        "北門區": "727",
+        "新營區": "730",
+        "後壁區": "731",
+        "白河區": "732",
+        "東山區": "733",
+        "六甲區": "734",
+        "下營區": "735",
+        "柳營區": "736",
+        "鹽水區": "737",
+        "善化區": "741",
+        "大內區": "742",
+        "山上區": "743",
+        "新市區": "744",
+        "安定區": "745"
+      },
+      "高雄市": {
+        "citycode": "17",
+        "新興區": "800",
+        "前金區": "801",
+        "苓雅區": "802",
+        "鹽埕區": "803",
+        "鼓山區": "804",
+        "旗津區": "805",
+        "前鎮區": "806",
+        "三民區": "807",
+        "楠梓區": "811",
+        "小港區": "812",
+        "左營區": "813",
+        "仁武區": "814",
+        "大社區": "815",
+        "岡山區": "820",
+        "路竹區": "821",
+        "阿蓮區": "822",
+        "田寮區": "823",
+        "燕巢區": "824",
+        "橋頭區": "825",
+        "梓官區": "826",
+        "彌陀區": "827",
+        "永安區": "828",
+        "湖內區": "829",
+        "鳳山區": "830",
+        "大寮區": "831",
+        "林園區": "832",
+        "鳥松區": "833",
+        "大樹區": "840",
+        "旗山區": "842",
+        "美濃區": "843",
+        "六龜區": "844",
+        "內門區": "845",
+        "杉林區": "846",
+        "甲仙區": "847",
+        "桃源區": "848",
+        "那瑪夏區": "849",
+        "茂林區": "851",
+        "茄萣區": "852"
+      },
+      "屏東縣": {
+        "citycode": "19",
+        "屏東市": "900",
+        "三地門鄉": "901",
+        "霧臺鄉": "902",
+        "瑪家鄉": "903",
+        "九如鄉": "904",
+        "里港鄉": "905",
+        "高樹鄉": "906",
+        "鹽埔鄉": "907",
+        "長治鄉": "908",
+        "麟洛鄉": "909",
+        "竹田鄉": "911",
+        "內埔鄉": "912",
+        "萬丹鄉": "913",
+        "潮州鎮": "920",
+        "泰武鄉": "921",
+        "來義鄉": "922",
+        "萬巒鄉": "923",
+        "崁頂鄉": "924",
+        "新埤鄉": "925",
+        "南州鄉": "926",
+        "林邊鄉": "927",
+        "東港鎮": "928",
+        "琉球鄉": "929",
+        "佳冬鄉": "931",
+        "新園鄉": "932",
+        "枋寮鄉": "940",
+        "枋山鄉": "941",
+        "春日鄉": "942",
+        "獅子鄉": "943",
+        "車城鄉": "944",
+        "牡丹鄉": "945",
+        "恆春鎮": "946",
+        "滿州鄉": "947"
+      },
+      "臺東縣": {
+        "citycode": "22",
+        "臺東市": "950",
+        "綠島鄉": "951",
+        "蘭嶼鄉": "952",
+        "延平鄉": "953",
+        "卑南鄉": "954",
+        "鹿野鄉": "955",
+        "關山鎮": "956",
+        "海端鄉": "957",
+        "池上鄉": "958",
+        "東河鄉": "959",
+        "成功鎮": "961",
+        "長濱鄉": "962",
+        "太麻里鄉": "963",
+        "金峰鄉": "964",
+        "大武鄉": "965",
+        "達仁鄉": "966"
+      },
+      "花蓮縣": {
+        "citycode": "23",
+        "花蓮市": "970",
+        "新城鄉": "971",
+        "秀林鄉": "972",
+        "吉安鄉": "973",
+        "壽豐鄉": "974",
+        "鳳林鎮": "975",
+        "光復鄉": "976",
+        "豐濱鄉": "977",
+        "瑞穗鄉": "978",
+        "萬榮鄉": "979",
+        "玉里鎮": "981",
+        "卓溪鄉": "982",
+        "富里鄉": "983"
+      },
+      "澎湖縣": {
+        "citycode": "24",
+        "馬公市": "880",
+        "西嶼鄉": "881",
+        "望安鄉": "882",
+        "七美鄉": "883",
+        "白沙鄉": "884",
+        "湖西鄉": "885"
+      },
+      "金門縣": {
+        "citycode": "25",
+        "金沙鎮": "890",
+        "金湖鎮": "891",
+        "金寧鄉": "892",
+        "金城鎮": "893",
+        "烈嶼鄉": "894",
+        "烏坵鄉": "896"
+      },
+      "連江縣": {
+        "citycode": "26",
+        "南竿鄉": "209",
+        "北竿鄉": "210",
+        "莒光鄉": "211",
+        "東引鄉": "212"
+      },
+      "南海諸島": {
+        "citycode": "27",
+        "東沙": "817",
+        "南沙": "819"
+      }
+    }
+    var cityData = [];
+    for (var key of Object.keys(cityEncodings)) {
+      var val = cityEncodings[key]
+      cityData.push({
+        type: 'city',
+        name: 'city-' + val.citycode,
+        display: key,
+        value: val.citycode
+      });
+    }
+
+    var accidentData = [
+      { type: 'accident', name: 'accident-traffic-death', display: '交通事故致死' },
+      { type: 'accident', name: 'accident-traffic-accident', display: '交通事故受傷' },
+    ];
+
+    var crimeData = [
+      { type: 'crime', name: 'crime-car-theft', display: '汽車竊盜', value: 'C' },
+      { type: 'crime', name: 'crime-scooter-theft', display: '機車竊盜', value: 'M' },
+      { type: 'crime', name: 'crime-house-theft', display: '住宅竊盜', value: 'H' },
+      { type: 'crime', name: 'crime-impulsive-raped', display: '強制性交', value: 'Ra' },
+      { type: 'crime', name: 'crime-robbery', display: '強盜', value: 'Mu' },
+      { type: 'crime', name: 'crime-juvenile-robbery', display: '青少年竊盜', value: 'Y' },
+      { type: 'crime', name: 'crime-drugs', display: '毒品', value: 'D' },
+      { type: 'crime', name: 'crime-mug', display: '搶奪', value: 'Ro' },
+    ];
+
+    function collectCrimeData() {
+      var result = {
+        bound: current_bound,
+        params: {
+          city: [],
+          district: [],
+          crime: []
+        }
+      };
+      var checked = $('#filter-app input[type="checkbox"]:checked');
+      for (var element of checked) {
+        if (new RegExp('-all').test(element.id)) { continue; }
+        if (new RegExp('city').test(element.id)) {
+          result.params.city.push(parseInt(element.id.replace(/city-/, '')))
+        } else if (new RegExp('district').test(element.id)) {
+          result.params.district.push(parseInt(element.id.replace(/district-/, '')))
+        } else if (new RegExp('crime').test(element.id)) {
+          var crimeCode = crimeData.filter(function(crime) { return element.name == crime.name })[0].value
+          result.params.crime.push(crimeCode);
+        }
+      }
+      return result;
+    }
+
+    var baseURL = 'http://192.168.43.158:8000';
+
+    function sendSearchCrimeRequest(callback) {
+      $.ajax({
+        url: baseURL + '/v1/crimex/crime',
+        type: 'get',
+        data: collectCrimeData(),
+        dataType: 'json',
+        success: function(data) { callback(data); },
+        error: function() {
+          console.error('Something wrong with the sendSearchCrimeRequest!');
+        }
+      })
+    }
+
+    function sendSearchAccidentRequest(callback) {
+      $.ajax({
+        url: '',
+        data: {
+          bound: current_bound,
+          params: collectCrimeData()
+        },
+        dataType: 'json',
+        success: callback(data),
+        error: function() {
+          console.error('Something wrong with the sendSearchAccidentRequest!');
+        }
+      })
+    }
+
+    var Filter = React.createClass({
+      getInitialState: function() {
+        return { districtData: [] };
+      },
+      componentDidMount: function() {
+        $('#filter-app').on('change', 'input', function(event) {
+          sendSearchCrimeRequest(function(data) {
+            console.log(data);
+          });
+        });
+      },
+      handleSetDistrictData: function(citycode) {
+        for (var key of Object.keys(cityEncodings)) {
+          var val = cityEncodings[key];
+          if (val.citycode == citycode) {
+            var districtData = []
+            for (var districtName of Object.keys(val)) {
+              if (districtName == 'citycode') { continue; }
+              var districtCode = val[districtName]
+              districtData.push({ type: 'district', name: 'district-' + districtCode, display: districtName, value: districtCode })
+            }
+            this.setState({ districtData: districtData })
+            var filterDistrictAllInput = this.refs['district-filter'].refs['filter-all'].refs.label
+            $(filterDistrictAllInput).removeClass('disabled')
+            var filterDistrictAllCheckbox = this.refs['district-filter'].refs['filter-all'].refs.input
+            $(filterDistrictAllCheckbox).prop('checked', false)
+          }
+        }
+      },
+      handleClearDistrictData: function() {
+        this.setState({ districtData: [] })
+        var filterDistrictAllInput = this.refs['district-filter'].refs['filter-all'].refs.label
+        $(filterDistrictAllInput).addClass('disabled')
+        var filterDistrictAllCheckbox = this.refs['district-filter'].refs['filter-all'].refs.input
+        $(filterDistrictAllCheckbox).prop('checked', false)
+      },
+      render: function() {
+        return (
+          <div className="filter">
+            <h3>縣市 City</h3>
+            <CheckboxGroup
+              id="city-filter-group"
+              all="city-all"
+              options={cityData}
+              setDistrictData={this.handleSetDistrictData}
+              clearDistrictData={this.handleClearDistrictData}
+            ></CheckboxGroup>
+
+            <h3>區域 District</h3>
+            <CheckboxGroup
+              ref="district-filter"
+              id="district-filter-group"
+              all="district-all"
+              options={this.state.districtData}
+            ></CheckboxGroup>
+
+            <h3>事故類別 Accident</h3>
+            <CheckboxGroup
+              id="accident-filter-group"
+              all="accident-all"
+              options={accidentData}
+            ></CheckboxGroup>
+
+            <h3>犯罪類別 Crime</h3>
+            <CheckboxGroup
+              id="crime-filter-group"
+              all="crime-all"
+              options={crimeData}
+            ></CheckboxGroup>
+          </div>
+        )
+      }
+    });
+
+    var CheckboxGroup = React.createClass({
+      componentDidMount: function() {
+        switch(this.props.id) {
+          case 'city-filter-group':
+            $('#city-filter-group input[type="checkbox"]').each(function() {
+              $(this).prop('checked', true);
+            });
+            $('#city-filter-group').on('change', 'input[type="checkbox"]', function(event) {
+              var checked = $('#city-filter-group input[type="checkbox"]:checked')
+              var checkedCount = checked.length
+              if (checkedCount == 1) {
+                this.props.setDistrictData(checked[0].id.replace(/^\D+/, ''))
+              } else {
+                this.props.clearDistrictData();
+              }
+            }.bind(this));
+            break;
+
+          case 'accident-filter-group':
+            $('#accident-filter-group input[type="checkbox"]').each(function() {
+              $(this).prop('checked', true);
+            });
+            break;
+
+          case 'crime-filter-group':
+            $('#crime-filter-group input[type="checkbox"]').each(function() {
+              $(this).prop('checked', true);
+            });
+            break;
+        }
+      },
+      handleUnifyCheckboxState: function(state) {
+        $('#' + this.props.id + ' input[type="checkbox"]').prop('checked', state);
+      },
+      handleDisableSelectAll: function(type) {
+        $('input#' + type + '-all').prop('checked', false);
+      },
+      render: function() {
+        var renderOtherOptions = null
+        if (this.props.options) {
+          renderOtherOptions = this.props.options.map(function(obj) {
+            return (
+              <Checkbox
+                type={obj.type}
+                name={obj.name}
+                disableSelectAll={this.handleDisableSelectAll}
+              >{obj.display}</Checkbox>
+            )
+          }.bind(this));
+        }
+        return (
+          <div id={this.props.id} className="checkboxGroup">
+            <Checkbox ref="filter-all" type={this.props.type} name={this.props.all} value={this.props.value} unifyCheckboxState={this.handleUnifyCheckboxState}>全部</Checkbox>
+            {renderOtherOptions}
+          </div>
+        )
+      }
+    });
+
+    var Checkbox = React.createClass({
+      componentDidMount: function() {
+        if (this.props.name == 'district-all') {
+          $(this.refs.label).addClass('disabled')
+        }
+
+        if (new RegExp('-all').test(this.props.name)) {
+          $(this.refs.input).on('change', function(event) {
+            this.props.unifyCheckboxState($(this.refs.input).is(':checked'));
+          }.bind(this));
+        } else {
+          $(this.refs.input).on('change', function(event) {
+            if (!$(this.refs.input).is(':checked')) {
+              this.props.disableSelectAll(this.props.type)
+            }
+          }.bind(this));
+        }
+
+        $(this.refs.input).data('value', this.props.value);
+      },
+      render: function() {
+        return (
+          <div className="checkbox">
+            <input ref="input" className="filter-checkbox" type="checkbox" name={this.props.name} id={this.props.name} />
+            <label ref="label" className="filter-label" htmlFor={this.props.name}>{this.props.children}</label>
+          </div>
+        )
+      }
+    });
+
+    ReactDOM.render(
+      <Filter />,
+      document.getElementById('filter-app')
+    )
+  </script>
+</body>
+</html>
