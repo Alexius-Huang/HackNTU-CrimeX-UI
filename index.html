@@ -920,12 +920,15 @@
         if (new RegExp('city').test(element.id)) {
           result.city.push(parseInt(element.id.replace(/city-/, '')))
         } else if (new RegExp('district').test(element.id)) {
-          result.district.push(parseInt(element.id.replace(/district-/, '')))
+          result.dist.push(parseInt(element.id.replace(/district-/, '')))
         } else if (new RegExp('crime').test(element.id)) {
           var crimeCode = crimeData.filter(function(crime) { return element.name == crime.name })[0].value
           result.crime.push(crimeCode);
         }
       }
+      result.city = result.city.map(function(code) { return String(code) }).join(',')
+      result.dist = result.dist.map(function(code) { return String(code) }).join(',')
+      result.crime = result.crime.join(',')
       console.log('Collect crime data: ', result);
       return result;
     }
@@ -948,7 +951,7 @@
         if (new RegExp('city').test(element.id)) {
           result.city.push(parseInt(element.id.replace(/city-/, '')))
         } else if (new RegExp('district').test(element.id)) {
-          result.district.push(parseInt(element.id.replace(/district-/, '')))
+          result.dist.push(parseInt(element.id.replace(/district-/, '')))
         } else if (new RegExp('accident').test(element.id)) {
           if (element.name == 'accident-traffic-death') {
             result.death = true
@@ -957,6 +960,8 @@
           }
         }
       }
+      result.city = result.city.map(function(code) { return String(code) }).join(',')
+      result.dist = result.dist.map(function(code) { return String(code) }).join(',')
       console.log('Collect accident data: ', result);
       return result;
     }
