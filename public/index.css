@@ -281,3 +281,57 @@ button.light-box-close-btn:hover > span:last-child {
   color: rgba(50, 50, 50, 0.7);
   background-color: rgba(50, 50, 50, 0.3);
 }
+div.accident-switch {
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+}
+div.accident-switch > input#accident-mode {
+  position: absolute;
+  left: -1000pt;
+}
+div.accident-switch > label {
+  display: inline-block;
+  position: relative;
+  margin-left: 5pt;
+  width: 50pt;
+  height: 18pt;
+  border-radius: 9pt;
+  padding: 0 5pt;
+  background-color: white;
+}
+div.accident-switch > label:before {
+  content: '';
+  transition: .25s;
+  display: inline-block;
+  position: absolute;
+  z-index: 3;
+  height: 14pt;
+  width: 14pt;
+  border-radius: 50%;
+  top: 2pt;
+  left: 2pt;
+  z-index: 4;
+  background-color: rgba(27, 45, 105, 0.65);
+}
+div.accident-switch > input#accident-mode:checked + label:before {
+  left: 44pt;
+  transition: .25s;
+}
+div.accident-switch > label:after,
+div.accident-switch > input#accident-mode:checked + label:after {
+  display: inline-block;
+  color: #555;
+  font-size: 80%;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+div.accident-switch > label:after {
+  content: '次數';
+  text-align: right;
+}
+div.accident-switch > input#accident-mode:checked + label:after {
+  content: '嚴重性';
+  text-align: left;
+}

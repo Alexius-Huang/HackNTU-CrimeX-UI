@@ -1055,7 +1055,10 @@
               options={this.state.districtData}
             ></CheckboxGroup>
 
-            <h3>事故類別 Accident</h3>
+            <h3>
+              事故類別 Accident
+              <AccidentSwitch on="severity" off="frequency" />
+            </h3>
             <CheckboxGroup
               id="accident-filter-group"
               all="accident-all"
@@ -1168,6 +1171,17 @@
         )
       }
     });
+
+    var AccidentSwitch = React.createClass({
+      render: function() {
+        return (
+          <div className="accident-switch">
+            <input ref="input" type="checkbox" name="accident-mode" id="accident-mode" />
+            <label ref="label" htmlFor="accident-mode"></label>
+          </div>
+        )
+      }
+    })
 
     ReactDOM.render(
       <Filter />,
