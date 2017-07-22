@@ -22,7 +22,7 @@
       }
 
       $('.light-box-close-btn').on('click', function(event) {
-        $('.light-box-wrapper').fadeOut()
+        $('.light-box').fadeOut()
       })
     });
   </script>
@@ -51,27 +51,45 @@
     </div>
   </div>
 
-  <div id="light-box-about" class="light-box-wrapper">
-    <div class="light-box-content">
+  <div id="light-box-about" class="light-box">
+    <div class="light-box-wrapper">
       <button class="light-box-close-btn">
         <span></span><span></span>
       </button>
+      <div class="light-box-content">
+        <div class="light-box-header">
+          <h2>關於 CrimeX 犯罪地圖</h2>
+        </div>
+        <div class="light-box-body" id="crime-x-logo">
+          <img src="./public/img/logo.png" alt="crimeX logo" />
+        </div>
+      </div>
     </div>
   </div>
 
-  <div id="light-box-team" class="light-box-wrapper">
-    <div class="light-box-content">
+  <div id="light-box-team" class="light-box">
+    <div class="light-box-wrapper">
       <button class="light-box-close-btn">
         <span></span><span></span>
       </button>
+      <div class="light-box-content">
+        <div class="light-box-header">
+          <h2>CrimeX 製作團隊</h2>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div id="light-box-event" class="light-box-wrapper">
-    <div class="light-box-content">
+  <div id="light-box-event" class="light-box">
+    <div class="light-box-wrapper">
       <button class="light-box-close-btn">
         <span></span><span></span>
       </button>
+      <div class="light-box-content">
+        <div class="light-box-header">
+          <h2>HackNTU 2017</h2>
+        </div>
+      </div>
     </div>
   </div>
 

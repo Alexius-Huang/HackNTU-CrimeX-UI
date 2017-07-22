@@ -166,7 +166,7 @@ input#trigger-btn:checked + div#wrapper > div#btn-group span#third {
   transform: rotate(-135deg);
   transition: .35s;
 }
-.light-box-wrapper {
+.light-box {
   display: none;
   position: fixed;
   width: 100%;
@@ -176,16 +176,36 @@ input#trigger-btn:checked + div#wrapper > div#btn-group span#third {
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 3;
 }
-.light-box-content {
-  position: absolute;
+.light-box-wrapper {
   width: 500pt;
   height: 500pt;
+  position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
   margin: auto;
   background-color: rgba(27, 45, 105, 0.9);
+}
+.light-box-content {
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+}
+.light-box-content > .light-box-header {
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+}
+.light-box-content > .light-box-header > h2 {
+  margin: 0;
+  padding: 20pt;
+}
+.light-box-content > .light-box-body {
+  
+}
+.light-box-content > .light-box-body#crime-x-logo {
+  background-color: white;
+  text-align: center;
 }
 button.light-box-close-btn {
   display: inline-block;
