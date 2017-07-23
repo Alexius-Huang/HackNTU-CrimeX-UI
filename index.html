@@ -117,6 +117,12 @@
         <div class="light-box-header">
           <h2>HackNTU 2017</h2>
         </div>
+        <div class="light-box-body">
+        本系統使用之資料取自於內政部之內政資料開放平臺，<br/>
+        並使用ARCgis(geocode.arcgis.com)公開服務將地址轉換成經緯度顯示於地圖上<br/>
+        鑒於部分資料僅標示路段或行政區域，故，所有位置僅供參考<br/>
+        詳細資料，可藉由本站提供之API查詢<br/>
+        </div>
       </div>
     </div>
   </div>
@@ -1385,8 +1391,7 @@
             this.setState({ districtData: districtData })
             var filterDistrictAllInput = this.refs['district-filter'].refs['filter-all'].refs.label
             $(filterDistrictAllInput).removeClass('disabled')
-            var filterDistrictAllCheckbox = this.refs['district-filter'].refs['filter-all'].refs.input
-            $(filterDistrictAllCheckbox).prop('checked', false)
+            $('#district-filter-group input[type="checkbox"]').prop('checked', true);
           }
         }
       },
