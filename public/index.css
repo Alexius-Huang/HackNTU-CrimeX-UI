@@ -272,7 +272,7 @@ button.light-box-close-btn:hover > span:last-child {
   color: #a3abc3;
   background-color: rgba(27, 45, 105, 0.65);
   padding: 0 12pt 15pt 12pt;
-  max-height: 400pt;
+  max-height: 300pt;
   overflow: auto;
 }
 #wrapper > #filter-app h3 {
@@ -281,7 +281,7 @@ button.light-box-close-btn:hover > span:last-child {
   color: white;
 }
 .checkboxGroup {
-  line-height: 28pt;
+  line-height: 30pt;
 }
 .checkbox {
   display: inline-block;
@@ -291,6 +291,7 @@ button.light-box-close-btn:hover > span:last-child {
   color: '#a3abc3';
   border-radius: 2pt;
   border: 1pt solid #a3abc3;
+  margin: 1pt;
   transition: .25s;
 }
 .checkbox > .filter-checkbox {
