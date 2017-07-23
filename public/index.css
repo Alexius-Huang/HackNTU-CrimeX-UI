@@ -66,6 +66,7 @@ html, body {
 #wrapper > #btn-group > button + button {
   opacity: 0;
   transition: .5s;
+  pointer-events: none;
   z-index: -1;
 }
 #wrapper > #btn-group > button > label {
@@ -147,6 +148,7 @@ input#trigger-btn:checked + div#wrapper > div#btn-group > button + button {
   opacity: 1;
   margin-left: 10px;
   transition: .5s;
+  pointer-events: visible;
 }
 input#trigger-btn:checked + div#wrapper > div#btn-group span#second {
   transform: rotate(-45deg);
