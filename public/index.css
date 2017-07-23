@@ -213,6 +213,40 @@ input#trigger-btn:checked + div#wrapper > div#btn-group span#third {
   text-align: center;
   padding: 20pt;
 }
+div.team-member-panel {
+  box-sizing: border-box;
+  padding: 20pt;
+  width: 50%;
+}
+div.team-member-panel > div {
+  display: inline-block;
+  background-color: rgba(27, 45, 105, 0.9);
+  border-right: 3pt solid rgba(54, 90, 210, 0.65);
+  padding: 2pt;
+  width: 160pt;
+  height: 50pt;
+  box-sizing: border-box;
+  padding-left: 10pt;
+}
+div.team-member-panel > div > p {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+div.team-member-panel > div:before {
+  content: '';
+  height: 100%;
+  vertical-align: middle;
+}
+div.team-member-panel > div > p:first-child {
+  font-size: 18pt;
+}
+div.team-member-panel > img {
+  width: 50pt;
+  height: 50pt;
+  display: inline-block;
+  float: left;
+}
 button.light-box-close-btn {
   display: inline-block;
   position: absolute;
