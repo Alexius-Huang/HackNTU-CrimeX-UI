@@ -201,11 +201,15 @@ input#trigger-btn:checked + div#wrapper > div#btn-group span#third {
   padding: 20pt;
 }
 .light-box-content > .light-box-body {
-  
+  color: white;
 }
 .light-box-content > .light-box-body#crime-x-logo {
   background-color: white;
   text-align: center;
+}
+.light-box-content > .light-box-body#crime-x-article {
+  text-align: center;
+  padding: 20pt;
 }
 button.light-box-close-btn {
   display: inline-block;
